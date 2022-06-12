@@ -10,29 +10,26 @@
 
 const fs = require('fs');
 const path = require('path');
-const cp = require('child_process');
-
-const cleanup = () => {
-  console.log('Cleaning up.');
-  // Reset changes made to package.json files.
-  cp.execSync(`git checkout -- templates/*/package.json`);
-  // Uncomment when snapshot testing is enabled by default:
-  // rm ./template/src/__snapshots__/App.test.js.snap
-};
+const inquirer = require('inquirer');
+const { verifyNodeVersion, getAppName } = require('./utils');
+const { questions } = require('./questions');
+const { resolveLanguage } = require('./config');
+const { createApp } = require('./createApp');
 
 const handleExit = () => {
-  cleanup();
   console.log('Exiting without error.');
   process.exit();
 };
 
-const handleError = e => {
+const handleError = (e) => {
   console.error('ERROR! An error was encountered while executing');
   console.error(e);
-  cleanup();
   console.log('Exiting with error.');
   process.exit(1);
 };
+
+// verify node version
+verifyNodeVersion();
 
 process.on('SIGINT', handleExit);
 process.on('uncaughtException', handleError);
@@ -47,42 +44,43 @@ console.log();
 // Temporarily overwrite package.json of all packages in monorepo
 // to point to each other using absolute file:/ URLs.
 
-const gitStatus = cp.execSync(`git status --porcelain`).toString();
+// const gitStatus = cp.execSync(`git status --porcelain`).toString();
 
-if (gitStatus.trim() !== '') {
-  console.log('Please commit your changes before running this script!');
-  console.log('Exiting because `git status` is not empty:');
-  console.log();
-  console.log(gitStatus);
-  console.log();
-  process.exit(1);
-}
+// if (gitStatus.trim() !== '') {
+//   console.log('Please commit your changes before running this script!');
+//   console.log('Exiting because `git status` is not empty:');
+//   console.log();
+//   console.log(gitStatus);
+//   console.log();
+//   process.exit(1);
+// }
 
+let finish = false;
 const rootDir = __dirname;
 const packagesDir = path.join(rootDir, 'templates');
 const packagePathsByName = {};
 
 // get cra, nextjs, vitejs
-fs.readdirSync(packagesDir).forEach(name => {
-  // get locations for cra, nextjs, vitejs
-  const templateDir = path.join(packagesDir, name);
+fs.readdirSync(packagesDir).forEach((name) => {
+  if (name) {
+    // get locations for cra, nextjs, vitejs
+    const templateDir = path.join(packagesDir, name);
 
-  // get directories javascript and typescript
-  fs.readdirSync(templateDir).forEach(templateDir => {
-    const packageDir = path.join(packagesDir, templateDir);
-    const packageJson = path.join(packageDir, 'package.json');
-    if (fs.existsSync(packageJson)) {
-      packagePathsByName[`${name}-${templateDir}`] = packageDir;
-    }
-  })
+    // get directories javascript and typescript
+    fs.readdirSync(templateDir).forEach((template) => {
+      const packageDir = path.join(templateDir, template);
+      const packageJson = path.join(packageDir, 'package.json');
+      if (fs.existsSync(packageJson)) {
+        packagePathsByName[`${name}-${template}`] = packageDir;
+      }
+    });
+  }
 });
 
-console.log(packagePathsByName);
-
-Object.keys(packagePathsByName).forEach(name => {
+Object.keys(packagePathsByName).forEach((name) => {
   const packageJson = path.join(packagePathsByName[name], 'package.json');
   const json = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
-  Object.keys(packagePathsByName).forEach(otherName => {
+  Object.keys(packagePathsByName).forEach((otherName) => {
     if (json.dependencies && json.dependencies[otherName]) {
       json.dependencies[otherName] = 'file:' + packagePathsByName[otherName];
     }
@@ -107,25 +105,49 @@ Object.keys(packagePathsByName).forEach(name => {
 console.log('Replaced all local dependencies for testing.');
 console.log('Do not edit any package.json while this task is running.');
 
-// Finally, pack react-scripts.
-// Don't redirect stdio as we want to capture the output that will be returned
-// from execSync(). In this case it will be the .tgz filename.
-const scriptsFileName = cp
-  .execSync(`npm pack`, { cwd: path.join(packagesDir, 'react-scripts') })
-  .toString()
-  .trim();
-const scriptsPath = path.join(packagesDir, 'react-scripts', scriptsFileName);
-const args = process.argv.slice(2);
+const [_name, _template, _language] = process.argv.slice(2);
 
-// Now run the CRA command
-const craScriptPath = path.join(packagesDir, 'create-react-app', 'index.js');
-cp.execSync(
-  `node ${craScriptPath} ${args.join(' ')} --scripts-version="${scriptsPath}"`,
-  {
-    cwd: rootDir,
-    stdio: 'inherit',
-  }
-);
+let appName = getAppName(_name);
+let template = _template;
+let language = resolveLanguage[_language];
 
-// Cleanup
-handleExit();
+if (appName && template && language) {
+  console.log({ appName, template, language });
+  createApp({ appName, template, language });
+}
+
+if (appName && template) {
+  inquirer.prompt([questions.language]).then(({ languageInput }) => {
+    language = languageInput;
+    console.log({ appName, template, language });
+    createApp({ appName, template, language });
+  });
+}
+
+if (appName) {
+  inquirer
+    .prompt([questions.template, questions.language])
+    .then(({ languageInput, templateInput }) => {
+      template = templateInput;
+      language = languageInput;
+      console.log({ appName, template, language });
+      createApp({ appName, template, language });
+    });
+}
+
+inquirer
+  .prompt([questions.appName, questions.template, questions.language])
+  .then(({ templateInput, appNameInput, languageInput }) => {
+    appName = getAppName(appNameInput);
+    template = templateInput;
+    language = languageInput;
+
+    console.log({ appName, template });
+    createApp({ appName, template, language });
+    finish = true;
+  });
+
+if (finish) {
+  // Cleanup
+  handleExit();
+}
