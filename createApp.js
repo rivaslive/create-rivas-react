@@ -1,60 +1,59 @@
 const fs = require('fs');
 const path = require('path');
-const util = require('util');
 const chalk = require('chalk');
 const fse = require('fs-extra');
+const emoji = require('node-emoji');
 const inquirer = require('inquirer');
 const { exec } = require('child_process');
 
 const { questions } = require('./questions');
 const { selectYarnOrNpm } = require('./utils');
 
-const install = (path, appName) => {
-  try {
-    process.chdir(path);
-    console.log(`cd ./${appName}`);
+const launchIcon = emoji.get(':rocket:');
 
-    return selectYarnOrNpm().then((packageManager) => {
+const install = (path, appName, packageManager) => {
+  return new Promise((resolve, reject) => {
+    try {
+      process.chdir(path);
+      console.log(`cd ./${appName}`);
+
       console.log(chalk.green(`installing devs using ${packageManager}`));
 
-      const installD = new Promise((resolve, reject) => {
-        const i = exec(`${packageManager} install`, (error) => {
-          if (error) {
-            return reject(error);
-          }
+      const i = exec(`${packageManager} install`, (error) => {
+        if (error) {
+          return reject(error);
+        }
 
-          return resolve(
-            `execute ${packageManager}${
-              packageManager !== 'yarn' ? 'run' : ''
-            } dev`
-          );
-        });
-
-        i.stdout.on('data', function (data) {
-          console.log(data);
-        });
+        return resolve(
+          `execute ${chalk.green(
+            `${packageManager}${packageManager !== 'yarn' ? 'run' : ''} dev`
+          )}`
+        );
       });
 
-      installD.then(console.log);
-      return installD;
-    });
-  } catch (e) {
-    throw e;
-  }
+      i.stdout.on('data', function (data) {
+        console.log(data);
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
 };
 
-const installPromisified = util.promisify(install);
-
 const installDevs = (path, appName) => {
-  installPromisified(path, appName)
-    .then((message) => {
-      console.log(chalk.green('🚀 Created project successfully'));
-      console.log(`Access with cd ${appName}`);
-      return console.log(chalk.blueBright(message));
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  selectYarnOrNpm().then((packageManager) => {
+    install(path, appName, packageManager)
+      .then((message) => {
+        console.log(
+          launchIcon + ' ' + chalk.green(`Created project successfully`)
+        );
+        console.log(`Access with cd ${appName}`);
+        return console.log(chalk.blueBright(message));
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  });
 };
 
 const copyProject = ({ pathTemplate, pathClientProject, appName }) => {
