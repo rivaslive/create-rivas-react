@@ -5,9 +5,9 @@ const Text = ({
   fontStyle = 'normal',
   htmlTag = 'p',
   letterSpacing = '-0.002em',
-  fontWeight = 'bold',
+  fontWeight = 'normal',
   textTransform = 'none',
-  margin = 'inherit',
+  margin = '0',
   fontSize = '1rem',
   lineHeight = '1.5',
   color = 'text',
@@ -15,7 +15,7 @@ const Text = ({
   mobileSettings = {
     fontSize,
     lineHeight,
-    textTransform,
+    textTransform
   },
   ...restProps
 }) => {

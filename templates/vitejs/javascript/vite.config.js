@@ -47,8 +47,8 @@ export default defineConfig(({ mode }) => {
         context: path.resolve(__dirname, 'src/context'),
         graphql: path.resolve(__dirname, 'src/graphql'),
         apollo: path.resolve(__dirname, 'src/apollo'),
-        config: path.resolve(__dirname, 'src/config'),
-      },
+        config: path.resolve(__dirname, 'src/config')
+      }
     }
   };
 });

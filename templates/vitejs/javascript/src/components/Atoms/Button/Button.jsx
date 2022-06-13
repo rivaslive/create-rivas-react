@@ -7,8 +7,9 @@ const Button = ({
   onClick,
   disabled,
   loading,
+  className,
   rounded = false,
-  variant = 'default', // default | link | outline | tag
+  variant = 'default', // default | link
   fontWeight = 'bold',
   margin = 'initial',
   color = variant === 'link' ? 'primary' : 'white',
@@ -26,9 +27,10 @@ const Button = ({
       $isLoading={loading}
       $color={color}
       $margin={margin}
+      $bgColor={bgColor}
       $fontWeight={fontWeight}
       $borderColor={borderColor}
-      $bgColor={bgColor}
+      className={'btn ' + className}
       {...restProps}
     >
       {loading && <Loading size="1.2rem" right={7} />}

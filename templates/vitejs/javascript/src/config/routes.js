@@ -11,6 +11,6 @@ const ROUTES = {
     path: '/auth/logout',
     relativePath: 'logout'
   }
-}
+};
 
 export default ROUTES;

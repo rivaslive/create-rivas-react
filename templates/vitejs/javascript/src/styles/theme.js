@@ -16,6 +16,7 @@ const colorsLight = {
   modal: 'rgba(0, 0, 0, 0.1)',
   bgModal: 'white',
   input: '#F5F5F5',
+  borderColor: '#F5F5F5',
   shadowInput: 'rgb(224, 224, 224)'
 };
 
@@ -27,6 +28,7 @@ const colorsDark = {
   nav: 'rgba(0, 0, 0, .5)',
   bgModal: '#161616',
   input: '#161616',
+  borderColor: '#313538',
   shadowInput: 'rgb(77, 77, 77)'
 };
 
@@ -54,5 +56,5 @@ export const themeDark = {
 
 export const mediaQueries = {
   tablet: '@media (min-width: 768px)',
-  desktop: '@media (min-width: 1200px)',
-}
+  desktop: '@media (min-width: 1200px)'
+};

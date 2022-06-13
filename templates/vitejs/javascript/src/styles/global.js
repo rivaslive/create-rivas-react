@@ -16,7 +16,11 @@ const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
+    font-size: 14px;
     box-sizing: border-box;
+  }
+  a {
+    color: currentColor;
   }
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

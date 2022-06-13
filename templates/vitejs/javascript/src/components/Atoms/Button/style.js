@@ -11,8 +11,6 @@ const cssDisabled = css`
 
 const cssVariants = {
   default: css``,
-  outline: css``,
-  tag: css``,
   link: css`
     min-width: min-content;
     padding: 0 6px;
@@ -43,7 +41,7 @@ export const ButtonStyle = styled.button`
   pointer-events: auto;
   border-radius: 12px;
   appearance: none;
-  margin: ${({ $margin, }) => $margin};
+  margin: ${({ $margin }) => $margin};
   font-weight: ${({ $fontWeight }) => $fontWeight};
   color: ${({ $color, theme }) => theme.colors[$color]};
   background: ${({ $bgColor, theme }) => theme.colors[$bgColor]};

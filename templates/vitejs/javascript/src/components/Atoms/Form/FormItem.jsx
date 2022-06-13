@@ -1,15 +1,9 @@
-import { cloneElement, useMemo } from 'react';
 import { Field } from 'rc-field-form';
-import { FieldProps } from 'rc-field-form/es/Field';
+import { cloneElement, useMemo } from 'react';
 
 import Text from 'components/Atoms/Text';
 import Input from 'components/Atoms/Input';
 import { StyleFormItem } from './style';
-
-type FormItemType = FieldProps & {
-  label?: string;
-  isRequired?: boolean;
-};
 
 const FormItem = ({
   children,
@@ -17,7 +11,7 @@ const FormItem = ({
   rules = [],
   isRequired = false,
   ...props
-}: FormItemType) => {
+}) => {
   const resolveRules = useMemo(() => {
     return [{ required: isRequired }, ...rules];
   }, [rules, isRequired]);
@@ -46,17 +40,17 @@ const FormItem = ({
               </Text>
             )}
             {cloneElement(
-              children as JSX.Element,
+              children,
               isInput
                 ? {
                     withErrors: meta.errors.length > 0,
-                    ...control,
+                    ...control
                   }
                 : control
             )}
             {meta.errors.map((error, index) => (
               // eslint-disable-next-line react/no-array-index-key
-              <Text htmlTag="span" color="$error" key={`rc-${index}`}>
+              <Text htmlTag="span" color="error" key={`rc-${index}`}>
                 {error}
               </Text>
             ))}

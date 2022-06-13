@@ -1,8 +1,7 @@
-import './styles/index.css';
+import 'styles/grid.css';
 import React, { memo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
-
 
 import Routes from 'routes';
 import GlobalStyle from 'styles/global';

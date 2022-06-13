@@ -19,7 +19,11 @@ const Routes = () => {
           </Route>
 
           <Route path="/app" element={<PrivateRoute />}>
-            <Route index path={ROUTES.DASHBOARD.relativePath} element={<Dashboard />} />
+            <Route
+              index
+              path={ROUTES.DASHBOARD.relativePath}
+              element={<Dashboard />}
+            />
           </Route>
 
           <Route path="/auth" element={<PrivateRoute />}>

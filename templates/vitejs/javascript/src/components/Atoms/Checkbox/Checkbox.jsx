@@ -1,26 +1,6 @@
-import {
-  CSSProperties,
-  ReactNode,
-  useState,
-  ChangeEvent,
-  useEffect,
-} from 'react';
-import { ColorType, CSS } from 'styles/stitches.config';
+import { useState, useEffect } from 'react';
 
 import { LabelStyle, StyleInputCheck, StyleCheckMark } from './style';
-
-interface CheckboxProps {
-  children?: ReactNode;
-  color?: ColorType;
-  fontWeight?: string;
-  fontSize?: string;
-  disabled?: boolean;
-  value?: boolean;
-  onChange?: (e?: any) => void;
-  css?: CSS;
-  style?: CSSProperties;
-  className?: string;
-}
 
 const Checkbox = ({
   children,
@@ -31,13 +11,13 @@ const Checkbox = ({
   style,
   fontWeight = '400',
   fontSize = '14px',
-  color = '$text',
+  color = 'text',
   css = {},
   ...restProps
-}: CheckboxProps) => {
+}) => {
   const [checked, setChecked] = useState(false);
 
-  const onChangeChecked = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeChecked = (e) => {
     setChecked(e.target.checked);
     onChange && onChange(e);
   };
@@ -60,7 +40,7 @@ const Checkbox = ({
         fontWeight,
         fontSize,
         color,
-        ...css,
+        ...css
       }}
     >
       {children}

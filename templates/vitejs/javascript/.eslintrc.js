@@ -10,6 +10,10 @@ module.exports = {
     browser: true
   },
   parserOptions: {
+    ecmaVersion: 'latest',
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true
+    },
     project: './jsconfig.json'
   },
   rules: {
@@ -42,8 +46,16 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off'
   },
   settings: {
-    next: {
-      rootDir: './src',
-    },
-  },
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        moduleDirectory: ['node_modules', 'src/']
+      },
+      react: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        moduleDirectory: ['node_modules', 'src/']
+      }
+    }
+  }
 };

@@ -1,24 +1,14 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { ColorType, CSS } from 'styles/stitches.config';
 
-import { InputBaseProps } from './BaseType';
 import {
   StyleButtonSearch,
   StyleInput,
   StyleLabel,
-  StyleWrapper,
+  StyleWrapper
 } from './style';
 
-export interface SearchInputProps extends InputBaseProps {
-  isRequired?: boolean;
-  labelColor?: ColorType;
-  bgColor?: ColorType;
-  css?: CSS;
-  onSearch?: (value: string) => void;
-}
-
-let timer: null | NodeJS.Timeout = null;
+let timer = null;
 
 const Search = ({
   value,
@@ -27,11 +17,10 @@ const Search = ({
   style,
   className,
   onSearch,
-  css = {},
   labelColor = '$text',
   bgColor = '$white',
   ...restInputProps
-}: SearchInputProps) => {
+}) => {
   const [inputValue, setInputValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
 
@@ -44,7 +33,7 @@ const Search = ({
     }
   }, [value]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { value } = e.target;
     setInputValue(value);
     if (timer) clearTimeout(timer);
@@ -60,12 +49,8 @@ const Search = ({
 
   return (
     <StyleWrapper
-      css={{
-        border: 'none',
-        color: labelColor,
-        backgroundColor: bgColor,
-        ...css,
-      }}
+      $color={labelColor}
+      $bgColor={bgColor}
       id={id}
       style={style}
       className={className}
@@ -82,10 +67,10 @@ const Search = ({
       <StyleButtonSearch
         onClick={handleSearch}
         variant="link"
-        bgColor="$warning"
-        color="$white"
+        bgColor="warning"
+        color="white"
       >
-        Buscar <SearchOutlined />
+        Search <SearchOutlined />
       </StyleButtonSearch>
     </StyleWrapper>
   );

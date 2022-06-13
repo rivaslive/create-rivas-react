@@ -15,7 +15,7 @@ const Title = ({
   mobileSettings = {
     fontSize,
     lineHeight,
-    textTransform,
+    textTransform
   },
   ...restProps
 }) => {

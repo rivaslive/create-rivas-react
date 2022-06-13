@@ -21,7 +21,9 @@ export const AppThemeProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const deviceTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const deviceTheme =
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
     const localTheme = storage.getItem(KEY_THEME_NAME);
     if (localTheme) {
       setMode(localTheme);

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import 'styles/App.css';
-import Button from 'components/Atoms/Button'
+import Button from 'components/Atoms/Button';
 
 function Home() {
   const [count, setCount] = useState(0);
