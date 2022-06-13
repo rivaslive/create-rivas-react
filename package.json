@@ -1,9 +1,20 @@
 {
+  "name": "create-rivas-react",
+  "version": "0.1.0",
+  "main": "index.js",
   "author": {
     "name": "rivaslive"
   },
   "bin": {
     "create-rivas-react": "index.js"
+  },
+  "scripts": {
+    "deploy": "yarn git-commit && yarn git-push",
+    "git-commit": "git add . && git commit -m \"rivas-cli update\"",
+    "git-push": "git push origin master",
+    "patch-release": "npm version patch && npm publish && git push --follow-tags",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bundleDependencies": false,
   "dependencies": {
@@ -29,16 +40,5 @@
     "node-cli",
     "reactjs"
   ],
-  "license": "ISC",
-  "main": "index.js",
-  "name": "create-rivas-react",
-  "scripts": {
-    "deploy": "yarn git-commit && yarn git-push",
-    "git-commit": "git add . && git commit -m \"rivas-cli update\"",
-    "git-push": "git push origin master",
-    "patch-release": "npm version patch && npm publish && git push --follow-tags",
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "0.0.3"
+  "license": "ISC"
 }
