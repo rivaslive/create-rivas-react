@@ -14,11 +14,11 @@ const questions = {
         value: 'vitejs'
       },
       {
-        name: 'React Create App',
+        name: 'React Create App (Coming soon)',
         value: 'rca'
       },
       {
-        name: 'Nextjs',
+        name: 'Nextjs (Coming soon)',
         value: 'nextjs'
       }
     ]
