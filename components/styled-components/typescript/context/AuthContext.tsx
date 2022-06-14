@@ -34,7 +34,7 @@ type AuthContextType = {
   loadingAuth: boolean;
   logout: () => void;
   login: (email: string, password: string) => Promise<UserType | null>;
-  signUp: (data: PayloadSignUpType) => Promise<UserType | null>;
+  signUp: (payload: PayloadSignUpType) => Promise<UserType | null>;
 };
 
 const defaultValue: AuthContextType = {
@@ -57,11 +57,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loadingAuth, setLoadingAuth] = useState(true);
   const [user, setUser] = useState<UserType | null>(null);
 
-  const persisUser = useCallback((user: UserType) => {
-    storage.setItem(AUTH_KEY, user);
+  const persisUser = useCallback((_user: UserType) => {
+    storage.setItem(AUTH_KEY, _user);
   }, []);
 
   const login = useCallback(
+    // eslint-disable-next-line
     async (email: string, password: string) => {
       setLoading(true);
       const data = await new Promise<UserType>((resolve) => {
@@ -82,6 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const signUp = useCallback(
+    // eslint-disable-next-line
     async (payload: PayloadSignUpType) => {
       setLoading(true);
       const data = await new Promise<UserType>((resolve) => {

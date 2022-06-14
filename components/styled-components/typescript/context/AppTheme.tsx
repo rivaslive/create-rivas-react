@@ -26,14 +26,14 @@ const KEY_THEME_NAME = 'theme';
 export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<ModeType>('light');
 
-  const setMode = (mode: ModeType) => {
+  const setMode = useCallback((mode: ModeType) => {
     storage.setItem(KEY_THEME_NAME, mode);
     setTheme(mode);
-  };
+  }, []);
 
   const themeToggle = useCallback(() => {
     setMode(theme === 'light' ? 'dark' : 'light');
-  }, [theme]);
+  }, [theme, setMode]);
 
   useEffect(() => {
     const deviceTheme =
@@ -45,7 +45,7 @@ export const AppThemeProvider = ({ children }: { children: ReactNode }) => {
     } else {
       setMode(deviceTheme ? 'dark' : 'light');
     }
-  }, []);
+  }, [setMode]);
 
   const out = useMemo(() => {
     return {

@@ -29,7 +29,9 @@ const Checkbox = ({
 
   const onChangeChecked = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
-    onChange && onChange(e);
+    if (onChange) {
+      onChange(e);
+    }
   };
 
   useEffect(() => {

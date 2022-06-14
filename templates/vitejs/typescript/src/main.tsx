@@ -1,3 +1,4 @@
+import 'styles/grid.css';
 import ReactDOM from 'react-dom/client';
 import { memo, StrictMode } from 'react';
 import { ThemeProvider } from 'styled-components';

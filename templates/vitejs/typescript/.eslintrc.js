@@ -97,7 +97,13 @@ module.exports = {
         '@typescript-eslint/no-unused-expressions': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
         '@typescript-eslint/restrict-plus-operands': 'off',
-        '@typescript-eslint/restrict-template-expressions': 'off'
+        '@typescript-eslint/restrict-template-expressions': 'off',
+        '@typescript-eslint/no-misused-promises': [
+          'error',
+          {
+            'checksVoidReturn': false
+          }
+        ]
       },
       parser: '@typescript-eslint/parser',
       parserOptions: {

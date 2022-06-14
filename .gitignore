@@ -23,11 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 yarn.lock
-.idea
-example
 
 #node_modules
 templates/*/*/node_modules
 templates/*/*/.idea
-.DS_Store
 **/.DS_Store
