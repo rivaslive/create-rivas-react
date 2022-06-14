@@ -1,3 +1,5 @@
+const path = require('path');
+
 const resolveLanguage = {
   javascript: 'javascript',
   js: 'javascript',
@@ -13,6 +15,26 @@ const resolveLanguage = {
   '--tsx': 'typescript'
 };
 
+const resolveTemplate = {
+  vitejs: 'vitejs',
+  nextjs: 'nextjs',
+  cra: 'cra',
+};
+
+const resolveStyledLib = {
+  'styled-components': 'styled-components',
+  stitches: 'stitches'
+};
+
+const removeComponents = {
+  'nextjs': (clientPath) => [path.join(clientPath, 'src', 'components', 'Atoms', 'PrivateRoute'), path.join(clientPath, 'src', 'components', 'Atoms', 'PublicRoute')],
+  'vitejs': () => [],
+  'cra': () => [],
+}
+
 module.exports = {
-  resolveLanguage
+  resolveTemplate,
+  resolveLanguage,
+  resolveStyledLib,
+  removeComponents
 };

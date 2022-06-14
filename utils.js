@@ -1,6 +1,8 @@
 const chalk = require('chalk');
 const semver = require('semver');
+const fse = require('fs-extra');
 const { exec } = require('child_process');
+const { removeComponents } = require('./config');
 
 function getAppName(appName) {
   if (!appName) return '';
@@ -43,14 +45,22 @@ const selectYarnOrNpm = () =>
   new Promise((resolve) => {
     exec('yarn --version', (error, stdout, stderr) => {
       if (error) {
-        return resolve('npm')
+        return resolve('npm');
       }
-      return resolve('yarn')
+      return resolve('yarn');
     });
   });
 
+const removeFoldersAndFiles = ({ path, template }) => {
+  const pathsToRemove = removeComponents[template](path);
+  pathsToRemove.forEach((_path) => {
+    fse.removeSync(_path);
+  });
+};
+
 module.exports = {
   getAppName,
+  removeFoldersAndFiles,
   selectYarnOrNpm,
   verifyNodeVersion
 };

@@ -17,21 +17,21 @@ export default defineConfig(({ mode }) => {
               'babel-plugin-styled-components',
               {
                 displayName: true,
-                fileName: false
-              }
-            ]
-          ]
-        }
-      })
+                fileName: false,
+              },
+            ],
+          ],
+        },
+      }),
     ],
     define: {
       // define env vars
       'process.env': Object.entries(env).reduce((prev, [key, val]) => {
         return {
           ...prev,
-          [key]: val
+          [key]: val,
         };
-      }, {})
+      }, {}),
     },
     resolve: {
       alias: {
@@ -47,8 +47,8 @@ export default defineConfig(({ mode }) => {
         context: path.resolve(__dirname, 'src/context'),
         graphql: path.resolve(__dirname, 'src/graphql'),
         apollo: path.resolve(__dirname, 'src/apollo'),
-        config: path.resolve(__dirname, 'src/config')
-      }
-    }
+        config: path.resolve(__dirname, 'src/config'),
+      },
+    },
   };
 });

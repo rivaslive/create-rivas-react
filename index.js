@@ -11,10 +11,10 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
-const { verifyNodeVersion, getAppName } = require('./utils');
-const { questions } = require('./questions');
-const { resolveLanguage } = require('./config');
 const { createApp } = require('./createApp');
+const { questions } = require('./questions');
+const { verifyNodeVersion, getAppName } = require('./utils');
+const { resolveLanguage, resolveStyledLib, resolveTemplate } = require('./config');
 
 const handleExit = () => {
   console.log('Exiting without error.');
@@ -55,14 +55,13 @@ console.log();
 //   process.exit(1);
 // }
 
-let finish = false;
 const rootDir = __dirname;
 const packagesDir = path.join(rootDir, 'templates');
 const packagePathsByName = {};
 
 // get cra, nextjs, vitejs
 fs.readdirSync(packagesDir).forEach((name) => {
-  if (name) {
+  if (name && name !== '.DS_Store') {
     // get locations for cra, nextjs, vitejs
     const templateDir = path.join(packagesDir, name);
 
@@ -105,49 +104,57 @@ Object.keys(packagePathsByName).forEach((name) => {
 console.log('Replaced all local dependencies for testing.');
 console.log('Do not edit any package.json while this task is running.');
 
-const [_name, _template, _language] = process.argv.slice(2);
+const [_name, _template, _language, _styledLib] = process.argv.slice(2);
 
 let appName = getAppName(_name);
-let template = _template;
+let template = resolveTemplate[_template];
 let language = resolveLanguage[_language];
+let styledLib = resolveStyledLib[_styledLib];
+
+if (appName && template && language && styledLib) {
+  createApp({ appName, template, language, styledLib });
+}
 
 if (appName && template && language) {
-  console.log({ appName, template, language });
-  createApp({ appName, template, language });
+  inquirer.prompt([questions.styledLib]).then(({ styledInput }) => {
+    styledLib = styledInput;
+    createApp({ appName, template, language, styledLib });
+  });
 }
 
 if (appName && template) {
-  inquirer.prompt([questions.language]).then(({ languageInput }) => {
-    language = languageInput;
-    console.log({ appName, template, language });
-    createApp({ appName, template, language });
-  });
+  inquirer
+    .prompt([questions.language, questions.styledLib])
+    .then(({ languageInput, styledInput }) => {
+      language = languageInput;
+      styledLib = styledInput;
+      createApp({ appName, template, language, styledLib });
+    });
 }
 
 if (appName) {
   inquirer
-    .prompt([questions.template, questions.language])
-    .then(({ languageInput, templateInput }) => {
+    .prompt([questions.template, questions.language, questions.styledLib])
+    .then(({ languageInput, templateInput, styledInput }) => {
       template = templateInput;
       language = languageInput;
-      console.log({ appName, template, language });
-      createApp({ appName, template, language });
+      styledLib = styledInput;
+      createApp({ appName, template, language, styledLib });
     });
 }
 
 inquirer
-  .prompt([questions.appName, questions.template, questions.language])
-  .then(({ templateInput, appNameInput, languageInput }) => {
+  .prompt([
+    questions.appName,
+    questions.template,
+    questions.language,
+    questions.styled
+  ])
+  .then(({ templateInput, appNameInput, languageInput, styledInput }) => {
     appName = getAppName(appNameInput);
     template = templateInput;
     language = languageInput;
+    styledLib = styledInput;
 
-    console.log({ appName, template });
-    createApp({ appName, template, language });
-    finish = true;
+    createApp({ appName, template, language, styledLib });
   });
-
-if (finish) {
-  // Cleanup
-  handleExit();
-}

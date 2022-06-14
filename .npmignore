@@ -5,3 +5,5 @@ yarn.lock
 .vscode
 example
 package-lock.json
+.DS_Store
+**/.DS_Store

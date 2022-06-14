@@ -38,6 +38,21 @@ const questions = {
       }
     ]
   },
+  styled: {
+    type: 'list',
+    name: 'styledInput',
+    message: 'Select styled lib.',
+    choices: [
+      {
+        name: 'styled-components',
+        value: 'styled-components'
+      },
+      {
+        name: 'Stitches (Coming soon)',
+        value: 'stitches'
+      }
+    ]
+  },
   overrideFolder: {
     type: 'confirm',
     name: 'overrideFolder',

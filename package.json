@@ -9,11 +9,11 @@
     "create-rivas-react": "index.js"
   },
   "scripts": {
+    "start": "node index.js",
     "deploy": "yarn git-commit && yarn git-push",
     "git-commit": "git add . && git commit -m \"rivas-cli update\"",
     "git-push": "git push origin master",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
-    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bundleDependencies": false,
@@ -29,6 +29,10 @@
   "devDependencies": {
     "@types/node": "^17.0.42",
     "prettier": "^2.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rivaslive/create-rivas-react.git"
   },
   "keywords": [
     "nodejs",
