@@ -6,17 +6,7 @@
     "incremental": true,
     "moduleResolution": "node",
     "strict": true,
-    "baseUrl": "./src",
-    "paths": {
-      "pages/*": ["pages/*"],
-      "components/*": ["components/*"],
-      "config/*": ["config/*"],
-      "hooks/*": ["hooks/*"],
-      "utils/*": ["utils/*"],
-      "graphql/*": ["graphql/*"],
-      "apollo/*": ["apollo/*"],
-      "styles/*": ["styles/*"]
-    }
+    "baseUrl": "./src"
   },
   "include": ["**/*.js", "**/*.jsx"]
 }

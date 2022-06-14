@@ -4,6 +4,10 @@
 
 All project generated for **create-rivas-react** can be with <span style="color: #f0db4f">javascript</span> or <span style="color: #3178C6">typescript</span>.
 
+## Preview Components here
+See all the components you can use here
+[Preview](https://create-rivas-react.vercel.app/)
+
 ## What benefits do you have?
 
 * <span style="color: #61DBFB">Reactjs</span> or <b>Nextjs</b>
