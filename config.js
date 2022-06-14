@@ -17,7 +17,13 @@ const resolveLanguage = {
 
 const resolveTemplate = {
   vitejs: 'vitejs',
+  Vitejs: 'vitejs',
+  Vite: 'vitejs',
+  vite: 'vitejs',
   nextjs: 'nextjs',
+  Nextjs: 'nextjs',
+  next: 'nextjs',
+  Next: 'nextjs',
   cra: 'cra',
 };
 
