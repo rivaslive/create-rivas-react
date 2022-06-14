@@ -1,5 +1,6 @@
 {
-  "name": "rivas-create-react",
+  "name": "create-rivas-react",
+  "description": "Project for creating a create-rivas-react",
   "private": true,
   "version": "0.0.0",
   "scripts": {

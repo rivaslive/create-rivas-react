@@ -1,11 +1,18 @@
 {
-  "name": "rivas-create-react",
+  "name": "create-rivas-react",
+  "description": "Project for creating a create-rivas-react",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "fix-all": "yarn format && yarn lint:fix",
+    "test-all": "yarn format:check && yarn lint"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

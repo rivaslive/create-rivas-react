@@ -25,11 +25,18 @@ const resolveTemplate = {
   next: 'nextjs',
   Next: 'nextjs',
   cra: 'cra',
+  'create-react-app': 'cra'
 };
 
 const resolveStyledLib = {
   'styled-components': 'styled-components',
-  stitches: 'stitches'
+  styled: 'styled-components',
+  '--styled': 'styled-components',
+  sc: 'styled-components',
+  '--sc': 'styled-components',
+  '--styled-components': 'styled-components',
+  stitches: 'stitches',
+  '--stitches': 'stitches'
 };
 
 const removeComponents = {

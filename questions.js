@@ -10,16 +10,16 @@ const questions = {
     message: 'Select template.',
     choices: [
       {
-        name: 'Nextjs',
-        value: 'nextjs'
-      },
-      {
         name: 'Vite',
         value: 'vitejs'
       },
       {
-        name: 'React Create App (Coming soon)',
-        value: 'rca'
+        name: 'Nextjs',
+        value: 'nextjs'
+      },
+      {
+        name: 'React Create App',
+        value: 'cra'
       }
     ]
   },

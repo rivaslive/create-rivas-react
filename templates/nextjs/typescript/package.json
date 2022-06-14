@@ -7,7 +7,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "fix-all": "yarn format && yarn lint:fix",
+    "test-all": "yarn format:check && yarn lint"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

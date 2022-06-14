@@ -41,22 +41,7 @@ console.log('If not, remember to do this before testing!');
 console.log('-------------------------------------------------------');
 console.log();
 
-// Temporarily overwrite package.json of all packages in monorepo
-// to point to each other using absolute file:/ URLs.
-
-// const gitStatus = cp.execSync(`git status --porcelain`).toString();
-
-// if (gitStatus.trim() !== '') {
-//   console.log('Please commit your changes before running this script!');
-//   console.log('Exiting because `git status` is not empty:');
-//   console.log();
-//   console.log(gitStatus);
-//   console.log();
-//   process.exit(1);
-// }
-
-const rootDir = __dirname;
-const packagesDir = path.join(rootDir, 'templates');
+const packagesDir = path.join(__dirname, 'templates');
 const packagePathsByName = {};
 
 // get cra, nextjs, vitejs
@@ -76,31 +61,6 @@ fs.readdirSync(packagesDir).forEach((name) => {
   }
 });
 
-Object.keys(packagePathsByName).forEach((name) => {
-  const packageJson = path.join(packagePathsByName[name], 'package.json');
-  const json = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
-  Object.keys(packagePathsByName).forEach((otherName) => {
-    if (json.dependencies && json.dependencies[otherName]) {
-      json.dependencies[otherName] = 'file:' + packagePathsByName[otherName];
-    }
-    if (json.devDependencies && json.devDependencies[otherName]) {
-      json.devDependencies[otherName] = 'file:' + packagePathsByName[otherName];
-    }
-    if (json.peerDependencies && json.peerDependencies[otherName]) {
-      json.peerDependencies[otherName] =
-        'file:' + packagePathsByName[otherName];
-    }
-    if (json.optionalDependencies && json.optionalDependencies[otherName]) {
-      json.optionalDependencies[otherName] =
-        'file:' + packagePathsByName[otherName];
-    }
-  });
-
-  fs.writeFileSync(packageJson, JSON.stringify(json, null, 2), 'utf8');
-  console.log(
-    'Replaced local dependencies in packages/' + name + '/package.json'
-  );
-});
 console.log('Replaced all local dependencies for testing.');
 console.log('Do not edit any package.json while this task is running.');
 
