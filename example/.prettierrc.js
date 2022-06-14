@@ -6,5 +6,5 @@ module.exports = {
   printWidth: 80,
   endOfLine: 'auto',
   singleQuote: true,
-  useTabs: false,
+  useTabs: false
 };

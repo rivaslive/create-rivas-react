@@ -5,6 +5,7 @@ import Input from 'components/Atoms/Input';
 import Button from 'components/Atoms/Button';
 import Loading from 'components/Atoms/Loading';
 import Checkbox from 'components/Atoms/Checkbox';
+import Image from 'components/Atoms/Image';
 import { Row, Col } from 'components/Atoms/Grid';
 import Container from 'components/Atoms/Container';
 import GoogleButton from 'components/Atoms/GoogleButton';
@@ -104,6 +105,17 @@ const AllComponents = (props) => {
           </Col>
           <Col xs={24} md={12}>
             Col 2
+          </Col>
+        </Row>
+      </ComponentStyle>
+
+      <ComponentStyle data-content="Image">
+        <Row>
+          <Col xs={24} md={12}>
+            <Image height={250} width={250} src="https://images.pexels.com/photos/245035/pexels-photo-245035.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
+          </Col>
+          <Col xs={24} md={12}>
+            <Image objectFit="cover" height={250} width={250} src="https://images.pexels.com/photos/245035/pexels-photo-245035.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
           </Col>
         </Row>
       </ComponentStyle>
