@@ -47,7 +47,7 @@ export const useStorage = <T>(key: string, opts?: Partial<OptsType>) => {
         return false;
       }
     },
-    [key, options]
+    [key, options],
   );
 
   const getItem = useCallback(() => {

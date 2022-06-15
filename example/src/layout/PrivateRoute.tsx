@@ -16,10 +16,11 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
     } else {
       setPassAuth(true);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   if (loadingAuth || !isAuthenticated) return null;
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   if (passAuth) return <>{children}</>;
 
   return null;

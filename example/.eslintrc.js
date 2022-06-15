@@ -2,10 +2,7 @@ module.exports = {
   extends: ['airbnb', 'plugin:jsx-a11y/recommended', 'prettier'],
   env: {
     node: true,
-    browser: true
-  },
-  parserOptions: {
-    project: './jsconfig.json'
+    browser: true,
   },
   rules: {
     // Too restrictive, writing ugly code to defend against a very unlikely scenario: https://eslint.org/docs/rules/no-prototype-builtins
@@ -24,7 +21,7 @@ module.exports = {
     // Use function hoisting to improve code readability
     'no-use-before-define': [
       'error',
-      { functions: false, classes: true, variables: true }
+      { functions: false, classes: true, variables: true },
     ],
     // It's not accurate in the monorepo style
     'no-restricted-exports': 'off',
@@ -38,17 +35,21 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies,
     'no-plusplus': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }]
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
   overrides: [
     {
-      files: ['*.{ts,tsx}'],
+      files: ['*.{ts,tsx}', '**/*.{ts,tsx}'],
       plugins: ['@typescript-eslint', 'react-hooks'],
       extends: [
         'airbnb-typescript',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking'
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
       ],
+      parserOptions: {
+        project: './tsconfig.json',
+      },
+      parser: '@typescript-eslint/parser',
       rules: {
         // Too restrictive, writing ugly code to defend against a very unlikely scenario: https://eslint.org/docs/rules/no-prototype-builtins
         'no-prototype-builtins': 'off',
@@ -66,7 +67,7 @@ module.exports = {
         // Use function hoisting to improve code readability
         'no-use-before-define': [
           'error',
-          { functions: false, classes: true, variables: true }
+          { functions: false, classes: true, variables: true },
         ],
         // It's not accurate in the monorepo style
         'no-restricted-exports': 'off',
@@ -81,13 +82,16 @@ module.exports = {
         'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies,
         'no-plusplus': 'off',
         '@typescript-eslint/indent': 'off',
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+        'import/no-extraneous-dependencies': [
+          'error',
+          { devDependencies: true },
+        ],
         // Allow most functions to rely on type inference. If the function is exported, then `@typescript-eslint/explicit-module-boundary-types` will ensure it's typed.
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-use-before-define': [
           'error',
-          { functions: false, classes: true, variables: true, typedefs: true }
+          { functions: false, classes: true, variables: true, typedefs: true },
         ],
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
@@ -101,14 +105,10 @@ module.exports = {
         '@typescript-eslint/no-misused-promises': [
           'error',
           {
-            'checksVoidReturn': false
-          }
-        ]
+            checksVoidReturn: false,
+          },
+        ],
       },
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        project: './tsconfig.json'
-      }
-    }
-  ]
+    },
+  ],
 };

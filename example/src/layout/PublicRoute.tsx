@@ -1,4 +1,4 @@
-import {ReactNode, useEffect, useState} from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import ROUTES from 'config/routes';
@@ -16,11 +16,11 @@ const PublicRoute = ({ children }: { children: ReactNode }) => {
     } else {
       setNotAuth(true);
     }
-  }, [isAuthenticated, loadingAuth])
-
+  }, [isAuthenticated, loadingAuth, router]);
 
   if (loadingAuth || isAuthenticated) return null;
 
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   if (notAuth) return <>{children}</>;
 
   return null;

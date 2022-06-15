@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 const useScrollPosition = () => {
   const [scrollPosition, setScrollPosition] = useState(
-    (typeof window !== 'undefined' && window.pageYOffset) || 0
+    (typeof window !== 'undefined' && window.pageYOffset) || 0,
   );
 
   const onScroll = () => {

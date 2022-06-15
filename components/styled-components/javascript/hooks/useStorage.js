@@ -48,7 +48,7 @@ export const useStorage = (key, opts = {}) => {
         return false;
       }
     },
-    [key, options]
+    [key, options],
   );
 
   const getItem = useCallback(() => {
